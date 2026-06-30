@@ -9,6 +9,7 @@
 - [🐘 PHP \& Laravel — Questions d'Entretien Complètes (Français)](#-php--laravel--questions-dentretien-complètes-français)
   - [📋 Table des Matières](#-table-des-matières)
   - [1 — PHP Fondamentaux](#1--php-fondamentaux)
+    - [Q3. Différence entre `include`, `require`, `include_once` et `require_once`](#q3-différence-entre-include-require-include_once-et-require_once)
   - [2 — Orienté Objet (POO)](#2--orienté-objet-poo)
   - [3 — Laravel — Architecture \& Cycle de vie](#3--laravel--architecture--cycle-de-vie)
   - [4 — Routing \& Middleware](#4--routing--middleware)
@@ -65,16 +66,20 @@ Toujours utiliser `===` dans les conditions critiques.
 
 ---
 
-**Q3. Expliquez la différence entre `include`, `require`, `include_once` et `require_once`.**
+### Q3. Différence entre `include`, `require`, `include_once` et `require_once`
 
-| Directive | Erreur si absent | Duplication |
-|---|---|---|
-| `include` | Warning (continue) | Oui |
-| `require` | Fatal Error (arrêt) | Oui |
-| `include_once` | Warning (continue) | Non |
-| `require_once` | Fatal Error (arrêt) | Non |
+Ces quatre instructions PHP servent à insérer le contenu d'un fichier dans un autre. La différence repose sur deux critères : **la gestion des erreurs** (si le fichier est introuvable) et **la vérification des doublons**.
 
-Utiliser `require_once` pour les classes et fichiers critiques.
+| Instruction | Si le fichier est introuvable | Inclusion multiple ? |
+| :--- | :--- | :--- |
+| **`include`** | ⚠️ **Warning** (le script continue) | Oui |
+| **`require`** | 🛑 **Fatal Error** (le script s'arrête) | Oui |
+| **`include_once`** | ⚠️ **Warning** (le script continue) | Non (ignoré si déjà inclus) |
+| **`require_once`** | 🛑 **Fatal Error** (le script s'arrête) | Non (ignoré si déjà inclus) |
+
+**💡 Bonnes pratiques d'utilisation :**
+* Privilégiez **`require_once`** pour le chargement de classes, de dépendances ou de fichiers de configuration critiques. Cela évite de faire planter le code avec des erreurs de type "Cannot redeclare class".
+* Utilisez **`include`** pour des éléments visuels ou optionnels (comme un composant HTML de pied de page). Si le fichier manque, l'utilisateur verra quand même le reste de la page.
 
 ---
 
